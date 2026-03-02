@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robpicker"
+version = "0.1.0"
+description = "Meta-learning cryo-ET particle picker"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "Apache-2.0"}
+authors = [
+  {name = "RobPicker authors"}
+]
+dependencies = [
+  "torch",
+  "tensorboard",
+  "kaggle",
+  "optuna",
+  "boto3",
+  "neptune",
+  "zarr",
+  "albumentations==1.4.21",
+  "timm==1.0.11",
+  "monai==1.4.0",
+  "mrcfile",
+  "scikit-learn",
+  "betty-ml",
+]
+
+[project.scripts]
+robpicker-train = "robpicker.train_meta:main"
+robpicker-eval = "robpicker.evaluate:main"
+robpicker-star2xml = "robpicker.star2xml:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["robpicker*"]
+
+[tool.setuptools.package-data]
+robpicker = ["configs/*.py"]
