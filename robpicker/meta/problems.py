@@ -127,6 +127,16 @@ class BaseProblem(ImplicitProblem):
         if lr is not None:
             self.log({f"{self.name}_lr": lr}, global_step=None)
 
+    def format_time_str(self, seconds):
+        days = int(seconds // (24 * 3600))
+        hours = int((seconds % (24 * 3600)) // 3600)
+        minutes = int((seconds % 3600) // 60)
+        secs = int(seconds % 60)
+        if days > 0:
+            return f"{days}d {hours:02d}:{minutes:02d}:{secs:02d}"
+        else:
+            return f"{hours:02d}:{minutes:02d}:{secs:02d}"
+
     def log_time(self):
         """Log elapsed time and ETA based on current step."""
         log_step = int(getattr(self.external_config, "log_step", 100))
@@ -149,8 +159,8 @@ class BaseProblem(ImplicitProblem):
         current_step = max(int(self._count), 1)
         remaining = max(total_steps - current_step, 0)
         eta = elapsed * (remaining / float(current_step))
-        elapsed_str = time.strftime("%H:%M:%S", time.gmtime(elapsed))
-        eta_str = time.strftime("%H:%M:%S", time.gmtime(eta))
+        elapsed_str = self.format_time_str(elapsed)
+        eta_str = self.format_time_str(eta)
         self.log(
             {
                 "elapsed_sec": float(elapsed),

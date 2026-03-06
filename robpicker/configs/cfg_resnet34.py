@@ -15,7 +15,7 @@ cfg.name = os.path.basename(__file__).split(".")[0]
 cfg.output_dir = f"./output/{os.path.basename(__file__).split('.')[0]}"
 
 # Dataset-specific settings
-cfg.data_dir = "/empiar_11830_data"
+cfg.data_dir = "./data"
 cfg.train_folder = "train"
 cfg.meta_folder = "meta"
 cfg.test_folder = "test"
@@ -60,7 +60,7 @@ cfg.backbone_args = dict(
 cfg.lr = 5e-4
 cfg.unroll_steps = 5     # Number of inner loop steps before meta-update
 cfg.warmup_steps = 50    # Warmup steps before meta-learning starts
-cfg.train_iters = 5000   # Total training iterations per epoch
+cfg.train_iters = 1500   # Total training iterations per epoch
 cfg.valid_steps = 500    # Validation frequency (steps)
 cfg.log_step = 20       # Logging frequency
 

@@ -65,7 +65,7 @@ robpicker-eval \
   --checkpoint /path/to/checkpoint_best.pth \
   --data_dir /path/to/my_dataset/test \
   --output_dir ./eval_results \
-  --thresholds 0.12,0.08  # use the thresholds printed above
+  --thresholds 0.12,0.08  # use the thresholds printed above, separated by comma
 ```
 
 ## Using your own datasets

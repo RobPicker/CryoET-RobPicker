@@ -55,7 +55,7 @@ robpicker-eval \
 
 2) **Use the calibrated thresholds for new tomograms.**
 
-Pass the thresholds to apply them during inference. If you only have unlabeled data, add `--inference_only`.
+Pass the thresholds to apply them during inference. If you have unlabeled data (for picking on tomograms without annotations), add `--inference_only`.
 
 ```bash
 robpicker-eval \
@@ -69,6 +69,8 @@ robpicker-eval \
 The script will write:
 - `predictions.csv` (raw predictions)
 - `predictions_thresholded.csv` (if `--thresholds` is supplied in inference-only mode)
+
+In the predictions, the unit of the coordinates (x,y,z) is Angstrom (Å), and the `conf` column indicates model confidence of the predictions.
 
 ## Notes
 
