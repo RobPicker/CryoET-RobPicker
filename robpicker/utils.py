@@ -1,6 +1,9 @@
 import math
 import os
 import random
+import importlib
+import importlib.util
+from copy import copy
 
 import numpy as np
 import pandas as pd
@@ -86,3 +89,30 @@ def get_data(cfg):
         val_df = test_df
 
     return train_df, meta_df, val_df
+
+
+def resolve_config_module(name: str) -> str:
+    """Resolve config module path for importlib."""
+    if "." in name:
+        return name
+    return f"robpicker.configs.{name}"
+
+
+def load_config(config_name_or_path):
+    """
+    Load config from either a module name or a file path.
+
+    Returns (cfg, config_path) where config_path is the file path of the config.
+    """
+    if os.path.isfile(config_name_or_path) or os.path.isfile(config_name_or_path + '.py'):
+        # Load from file path
+        config_path = config_name_or_path if os.path.isfile(config_name_or_path) else config_name_or_path + '.py'
+        spec = importlib.util.spec_from_file_location("config_module", config_path)
+        config_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(config_module)
+        return copy(config_module.cfg), config_path
+    else:
+        # Load from module
+        module_name = resolve_config_module(config_name_or_path)
+        config_module = importlib.import_module(module_name)
+        return copy(config_module.cfg), config_module.__file__

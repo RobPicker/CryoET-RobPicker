@@ -43,7 +43,7 @@ Change the `cfg.data_dir` in the example config file `robpicker/configs/cfg_resn
 ```
 robpicker-train -C cfg_resnet34
 ```
-The time elapse and estimated remaning time for the training are printed as `[Problem "main"] elapsed=HH:MM:SS eta=HH:MM:SS`.
+The time elapse and estimated remaning time for the training are printed as `[Problem "main"] elapsed=DD HH:MM:SS eta=DD HH:MM:SS`. The training on EMPIAR-11830 can take from a few hours to 2 days, depending on the GPU capacity.
 
 The trained models (checkpoints) are saved under the `cfg.output_dir` specified in the config: `./output/cfg_resnet34`.
 
@@ -53,6 +53,7 @@ Run inference on the meta folder containing tomograms and XMLs to determine thre
 
 ```bash
 robpicker-eval \
+  --config cfg_resnet34 \
   --checkpoint /path/to/checkpoint_best.pth \
   --data_dir /path/to/my_dataset/meta \
   --output_dir ./output_results 
@@ -62,6 +63,7 @@ Run inference on the test folder containing tomograms and XMLs to calculate pick
 
 ```bash
 robpicker-eval \
+  --config cfg_resnet34 \
   --checkpoint /path/to/checkpoint_best.pth \
   --data_dir /path/to/my_dataset/test \
   --output_dir ./eval_results \

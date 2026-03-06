@@ -30,6 +30,7 @@ import mrcfile
 from monai import transforms as mt
 
 from robpicker.data import ds
+from robpicker.utils import load_config
 
 
 # ============================================================================
@@ -452,19 +453,12 @@ def run_inference_and_postprocess(
     return all_predictions
 
 
-def resolve_config_module(name: str) -> str:
-    """Resolve config module path for importlib."""
-    if "." in name:
-        return name
-    return f"robpicker.configs.{name}"
-
-
 def main():
     parser = argparse.ArgumentParser(description="Evaluate on test set")
     parser.add_argument("--checkpoint", required=True, help="Path to checkpoint file")
     parser.add_argument("--data_dir", required=True, help="Path to test data directory")
     parser.add_argument("--output_dir", default="./eval_results", help="Output directory")
-    parser.add_argument("--config", default="cfg_resnet34", help="Config file name (without .py)")
+    parser.add_argument("--config", default="cfg_resnet34", help="Config file name or path (with or without .py extension)")
     parser.add_argument("--gpu", type=int, default=0, help="GPU to use")
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size for inference")
     parser.add_argument("--patch_overlap", default=0.3,
@@ -499,7 +493,7 @@ def main():
     os.makedirs(args.output_dir, exist_ok=True)
 
     print(f"Loading config: {args.config}")
-    cfg = copy(importlib.import_module(resolve_config_module(args.config)).cfg)
+    cfg, _ = load_config(args.config)
     cfg.device = device
     cfg.batch_size_val = args.batch_size
 

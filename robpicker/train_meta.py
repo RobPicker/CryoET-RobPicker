@@ -40,6 +40,7 @@ from robpicker.utils import (
     get_data,
     worker_init_fn,
     get_cosine_schedule_with_warmup,
+    load_config,
 )
 from robpicker.data import ds
 
@@ -65,13 +66,6 @@ def setup_logging(output_dir):
         ]
     )
     return logging.getLogger(__name__)
-
-def resolve_config_module(name: str) -> str:
-    """Resolve config module path for importlib."""
-    if "." in name:
-        return name
-    return f"robpicker.configs.{name}"
-
 
 def get_model(cfg):
     """Get the meta-learning enabled model."""
@@ -275,7 +269,7 @@ def get_meta_dataloaders(train_df, meta_df, val_df, cfg):
         return train_loader, meta_loader, val_loader
 
 
-def train_meta(cfg, args):
+def train_meta(cfg, args, config_path):
     """Main meta-learning training function."""
     # Set seed
     if cfg.seed < 0:
@@ -293,8 +287,6 @@ def train_meta(cfg, args):
     os.makedirs(output_dir, exist_ok=True)
 
     # save config to output dir
-    config_module = resolve_config_module(getattr(args, "config", cfg.name))
-    config_path = importlib.import_module(config_module).__file__
     shutil.copyfile(config_path, os.path.join(output_dir, os.path.basename(config_path)))
 
     # Setup logging
@@ -577,13 +569,13 @@ def train_meta(cfg, args):
 def main():
     parser = argparse.ArgumentParser(description="Meta-learning training for cryo-ET")
 
-    parser.add_argument("-C", "--config", required=True, help="config filename")
+    parser.add_argument("-C", "--config", required=True, help="Config file name or path (with or without .py extension)")
     parser.add_argument("--resume", type=str, default=None, help="Path to checkpoint file to resume from")
 
     parser_args, other_args = parser.parse_known_args(sys.argv)
 
     # Import config
-    cfg = copy(importlib.import_module(resolve_config_module(parser_args.config)).cfg)
+    cfg, config_path = load_config(parser_args.config)
 
     # Set meta-learning flags
     if cfg.meta_mixup:
@@ -620,7 +612,7 @@ def main():
     cfg.calc_metric = importlib.import_module(cfg.metric).calc_metric
 
     # Run training
-    result = train_meta(cfg, parser_args)
+    result = train_meta(cfg, parser_args, config_path)
     print(f"Final result: {result}")
 
 

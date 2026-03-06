@@ -31,7 +31,7 @@ Class labels are mapped to class names by `cfg.class_mapping` in your config (se
 
 Many cryo-ET annotations are in RELION `.star` files. Use the converter:
 
-```
+```bash
 robpicker-star2xml \
   --input /path/to/classA.star /path/to/classB.star \
   --class-map classA:1 classB:2 \
@@ -90,8 +90,8 @@ Save your config file with a name like `cfg_my_dataset.py`.
 
 ## Training
 
-Train with your config:
+Train with your configurations (supply the complete path to the config file, or the file name if it is under the configs folder):
 
-```
-robpicker-train -C cfg_my_dataset
+```bash
+robpicker-train -C cfg_my_dataset # can also be /path/to/cfg_my_dataset.py
 ```

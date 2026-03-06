@@ -60,7 +60,7 @@ cfg.backbone_args = dict(
 cfg.lr = 5e-4
 cfg.unroll_steps = 5     # Number of inner loop steps before meta-update
 cfg.warmup_steps = 50    # Warmup steps before meta-learning starts
-cfg.train_iters = 1500   # Total training iterations per epoch
+cfg.train_iters = 1500   # Total training iterations
 cfg.valid_steps = 500    # Validation frequency (steps)
 cfg.log_step = 20       # Logging frequency
 

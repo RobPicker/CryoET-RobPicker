@@ -16,15 +16,10 @@ cfg.schedule = "cosine"
 cfg.num_cycles = 0.5
 cfg.weight_decay = 0.0
 cfg.warmup = 0.0
-cfg.epochs = 10
 cfg.seed = -1
 
 # eval
-cfg.eval_ddp = True
 cfg.calc_metric = True
-cfg.calc_metric_epochs = 1
-cfg.eval_steps = 0
-cfg.eval_epochs = 1
 
 # resources
 cfg.gpu = 0

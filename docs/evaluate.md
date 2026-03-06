@@ -48,6 +48,7 @@ Run evaluation on a set with annotations (e.g., `meta/`). If you do not pass `--
 
 ```bash
 robpicker-eval \
+  --config cfg_resnet34 \
   --checkpoint /path/to/checkpoint_best.pth \
   --data_dir /path/to/my_dataset/meta \
   --output_dir ./eval_meta
@@ -59,6 +60,7 @@ Pass the thresholds to apply them during inference. If you have unlabeled data (
 
 ```bash
 robpicker-eval \
+  --config cfg_resnet34 \
   --checkpoint /path/to/checkpoint_best.pth \
   --data_dir /path/to/my_dataset/test \
   --output_dir ./eval_test \
