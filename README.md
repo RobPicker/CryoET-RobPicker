@@ -30,7 +30,7 @@ pip install -e .
 ```
 
 ## Quick start
-We use EMPIAR-11830 as an example to train a RobPicker model to pick ribosome and ATP synthase. First select and download the following Chlamy Visual proteomics denoised tomograms from [EMPIAR-11830](https://www.ebi.ac.uk/empiar/EMPIAR-11830/):
+We use EMPIAR-11830 as an example to train a RobPicker model to pick ribosome and ATP synthase. First select and download the following Chlamy Visual proteomics denoised tomograms from [EMPIAR-11830](https://www.ebi.ac.uk/empiar/EMPIAR-11830/) or from this [Google drive](https://drive.google.com/drive/folders/1OMkBf_T9tdVi_DV27f0EGbnn1reahrmK?usp=sharing):
 - train: 1287.mrc, 1317.mrc, 137.mrc, 145.mrc, 178.mrc, 1959.mrc, 2025.mrc, 2038.mrc, 2048.mrc, 2158.mrc, 2224.mrc, 2252.mrc, 269.mrc, 295.mrc
 - meta: 1333.mrc, 1694.mrc
 - test: 2814.mrc, 2816.mrc
